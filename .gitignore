@@ -1,0 +1,14 @@
+.vscode/
+node_modules/
+public/
+build/
+tmp/
+temp/
+
+# misc
+.DS_Store
+*.pem
+dist
+
+# debug
+npm-debug.log*
