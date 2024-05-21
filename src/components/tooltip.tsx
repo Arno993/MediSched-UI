@@ -33,13 +33,13 @@ export const Tooltip = styled.div<{ isOpen: boolean; isAnimatingOut: boolean }>`
   z-index: 10;
   margin-left: 32px;
   width: 220px;
-  padding: 20px; /* Adjust padding as needed */
+  padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: auto; /* Let the height grow with content */
+  height: auto;
   visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
   animation: ${({ isOpen, isAnimatingOut }) =>
     isOpen
@@ -55,28 +55,28 @@ export const Tooltip = styled.div<{ isOpen: boolean; isAnimatingOut: boolean }>`
 
 export const ProfileCircle = styled.div`
   background-color: #e0e0e0;
-  width: 80px; /* Match the circle size in your design */
+  width: 80px;
   height: 80px;
   border-radius: 50%;
-  margin-bottom: 10px; /* Space below the circle */
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px; /* Adjust as needed */
+  font-size: 24px;
   color: #333;
-  position: relative; /* To position the after pseudo-element */
+  position: relative;
 
   &:after {
     content: "";
     position: absolute;
-    bottom: -15px; /* Adjust to place the arrow correctly */
+    bottom: -15px;
     left: 50%;
     transform: translateX(-50%) rotate(45deg);
-    width: 20px; /* Adjust to match the design */
+    width: 20px;
     height: 20px;
     background-color: #fff;
     box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1);
-    z-index: -1; /* Ensure it's behind the profile circle */
+    z-index: -1;
   }
 `;
 

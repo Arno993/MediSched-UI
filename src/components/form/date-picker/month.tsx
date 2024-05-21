@@ -1,5 +1,6 @@
 import React from "react";
 import { MonthCalendar } from "@mui/x-date-pickers/MonthCalendar";
+import { colors } from "../../../shared/global-styles/color";
 
 interface MonthPickerProps {
   date: Date;
@@ -24,10 +25,14 @@ const MonthPicker: React.FC<MonthPickerProps> = ({ date, onChange }) => {
         flexWrap: "nowrap",
         position: "relative",
         right: "15px",
+        fontSize: "12px",
         justifyContent: "space-between",
         ".MuiPickersMonth-root": {
           flex: "none",
           margin: "auto",
+        },
+        ".Mui-selected": {
+          backgroundColor: `${colors.darkNavy} !important`,
         },
       }}
       onChange={(newDate) => handleMonthChange(newDate)}

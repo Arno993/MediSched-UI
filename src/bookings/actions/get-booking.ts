@@ -55,6 +55,9 @@ export const getBooking = async (
   queryParams.append("filter", JSON.stringify(filter));
 
   try {
+    console.log("Start Date:", start);
+    console.log("End Date:", end);
+
     const response = await fetch(`/api/booking?${queryParams.toString()}`, {
       headers,
       credentials: "include",
@@ -65,6 +68,8 @@ export const getBooking = async (
     }
 
     const json = await response.json();
+
+    console.log(json);
     return json;
   } catch (error) {
     console.error("Error fetching bookings:", error);

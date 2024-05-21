@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
-import styled from "styled-components";
 import { Sidebar } from "./components/sidebar";
 import { BottomBar } from "./components/bottom-bar";
 import {
@@ -9,7 +9,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import DayPicker from "./components/date-picker/day";
+import DayPicker from "./components/form/date-picker/day";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import Navbar, { ViewType } from "./components/navbar";
@@ -21,36 +21,11 @@ import { Booking } from "./bookings/domain/booking";
 import { calculateDatesForView } from "./bookings/utils/date-ulitilies";
 import AppointmentDetails from "./components/appointment/appointment-details";
 import { Appointment } from "./diary/domain/appointment";
-
-const AppContainer = styled.div`
-  display: flex;
-  height: 100vh;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-grow: 1;
-  padding: 20px;
-  padding-top: 73px;
-  background-color: #e8e6e66e;
-  position: relative;
-  gap: 20px;
-`;
-
-const ContentBox = styled.div`
-  background: #ffffff;
-  padding: 15px;
-  height: calc(100vh - 175px);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-  transition: all 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-  }
-`;
+import LoadingScreen from "./shared/loading-overlay";
+import { AppointmentModal } from "./components/appointment/modals/appointment-modal";
+import { FloatingButton } from "./components/add-button";
+import { AppContainer, Content, ContentBox } from "./app-styles";
+import { UserProvider, useUser } from "./contexts/user-context";
 
 const App: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -59,6 +34,8 @@ const App: React.FC = () => {
   const calendarRef = useRef<FullCalendar>();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [appointment, setAppointment] = useState<Appointment>();
+  const [showModal, setShowModal] = useState(false);
+  const { isLoading } = useUser();
 
   useEffect(() => {
     const checkAuth = () => {
@@ -88,7 +65,7 @@ const App: React.FC = () => {
         })
         .catch((error) => console.error("Fetching bookings failed:", error));
     }
-  }, [isAuthenticated, view, selectedDate]);
+  }, [isAuthenticated, view, selectedDate, appointment]);
 
   const changeView = (newView: ViewType) => {
     if (calendarRef.current) {
@@ -96,6 +73,10 @@ const App: React.FC = () => {
       api.changeView(newView);
       setView(newView);
     }
+  };
+
+  const handleToggleModal = () => {
+    setShowModal(!showModal);
   };
 
   const handleYearChange = (newDate: Date) => {
@@ -106,9 +87,14 @@ const App: React.FC = () => {
     setSelectedDate(newDate);
   };
 
+  const resetAppointment = () => {
+    setAppointment(undefined);
+  };
+
   return (
     <Router>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
+        {isLoading && <LoadingScreen />}
         {isAuthenticated ? (
           <>
             <Navbar
@@ -128,25 +114,40 @@ const App: React.FC = () => {
                     setAppointment={setAppointment}
                   />
                 </ContentBox>
-                <ContentBox
-                  style={{
-                    flex: 2,
-                    // background: "#f5f5f5",
-                    backgroundColor: "#ffffff",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  {/* <DayPicker /> */}
-                  {appointment && (
-                    <AppointmentDetails appointment={appointment} />
-                  )}
-                </ContentBox>
+                {appointment && (
+                  <ContentBox
+                    style={{
+                      flex: 2,
+                      backgroundColor: "#ffffff",
+                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <AppointmentDetails
+                      appointment={appointment}
+                      onEdit={handleToggleModal}
+                    />
+                  </ContentBox>
+                )}
               </Content>
+              <FloatingButton
+                onClick={() => {
+                  resetAppointment();
+                  handleToggleModal();
+                }}
+              >
+                +
+              </FloatingButton>
               <BottomBar
                 date={selectedDate}
                 onYearChange={handleYearChange}
                 onMonthChange={handleMonthChange}
               />
+              {showModal && (
+                <AppointmentModal
+                  onClose={() => setShowModal(false)}
+                  appointment={appointment}
+                />
+              )}
             </AppContainer>
           </>
         ) : (

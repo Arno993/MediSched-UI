@@ -1,4 +1,12 @@
 import styled, { css } from "styled-components";
+import { colors } from "../../shared/global-styles/color";
+
+export enum Theme {
+  primary = "primary",
+  secondary = "secondary",
+  danger = "danger",
+  text = "text",
+}
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isActive: boolean;
@@ -21,10 +29,11 @@ const RippleButton = styled.button<ButtonProps>`
   ${rippleAnimation}
   position: relative;
   overflow: hidden;
-  padding: 0.5rem 1rem;
+  padding: 10px;
   margin: 0 0.25rem;
-  border-radius: 10px;
-  background: ${({ isActive }) => (isActive ? "#0095ff99" : "#f1f1f1")};
+  border-radius: 20px;
+  background: ${({ isActive }) =>
+    isActive ? `${colors.darkNavy}` : `${colors.lightGray}`};
   color: ${({ isActive }) => (isActive ? "#fff" : "#333")};
   border: none;
   min-width: 70px;
@@ -33,7 +42,10 @@ const RippleButton = styled.button<ButtonProps>`
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: scale(1.1);
+    color: #fff;
+    background-color: ${({ isActive }) =>
+      isActive ? `${colors.darkNavy}` : "#d3d3d3 !important"};
+    transform: scale(1.02);
   }
 
   &:focus {

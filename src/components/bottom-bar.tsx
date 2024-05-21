@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Month from "./date-picker/month";
-import Year from "./date-picker/year";
+import Month from "./form/date-picker/month";
+import Year from "./form/date-picker/year";
+import { colors } from "../shared/global-styles/color";
 
 type DateChangeHandler = (newDate: Date) => void;
 
@@ -26,7 +27,7 @@ export const BottomBar: React.FC<BottomBarProps> = ({
 
 const BottomBarContainer = styled.div`
   width: calc(100% - 81px);
-  height: 40px;
+  height: 50px;
   margin-left: 81px;
   position: fixed;
   background: #fff;
@@ -36,4 +37,12 @@ const BottomBarContainer = styled.div`
   padding: 10px 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   bottom: 0;
+
+  .css-2ulfj5-MuiTypography-root {
+    color: ${colors.darkNavy};
+  }
+  .MuiSvgIcon-root {
+    width: 15px;
+    height: 15px;
+  }
 `;
