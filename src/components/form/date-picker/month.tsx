@@ -1,6 +1,6 @@
 import React from "react";
 import { MonthCalendar } from "@mui/x-date-pickers/MonthCalendar";
-import { colors } from "../../shared/global-styles/color";
+import { colors } from "../../../shared/global-styles/color";
 
 interface MonthPickerProps {
   date: Date;

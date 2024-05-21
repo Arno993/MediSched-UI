@@ -12,18 +12,26 @@ export const createBooking = async (
   reason: string
 ): Promise<ApiResponse> => {
   const session_id = Cookies.get("session_id");
+
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    ...(session_id ? { Cookie: `session_id=${session_id}` } : {}),
+    ...(session_id
+      ? {
+          Cookie: `${document.cookie}; session_id=${session_id.replace(
+            /"/g,
+            ""
+          )}`,
+        }
+      : {}),
   };
 
   const body = JSON.stringify({
     model: {
-      entity_uid,
-      diary_uid,
-      booking_type_uid,
+      entity_uid: 1,
+      diary_uid: 1,
+      booking_type_uid: 1,
       booking_status_uid,
-      start_time: `${start_time}T08:00:00`,
+      start_time: `${start_time}`,
       duration,
       patient_uid,
       reason,

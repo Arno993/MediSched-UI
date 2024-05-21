@@ -26,17 +26,16 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
   onClose,
   appointment,
 }) => {
-  const [diaryUid, setDiaryUid] = useState("");
-  const [bookingTypeUid, setBookingTypeUid] = useState("");
-  const [bookingStatusUid, setBookingStatusUid] = useState("");
-  const [debtorName, setDebtorName] = useState("");
-  const [debtorSurname, setDebtorSurname] = useState("");
-  const [cellphone, setCellphone] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [duration, setDuration] = useState("");
+  const [diaryUid, setDiaryUid] = useState<string>("");
+  const [bookingTypeUid, setBookingTypeUid] = useState<string>("");
+  const [bookingStatusUid, setBookingStatusUid] = useState<string>("");
+  const [debtorName, setDebtorName] = useState<string>("");
+  const [debtorSurname, setDebtorSurname] = useState<string>("");
+  const [cellphone, setCellphone] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+  const [time, setTime] = useState<string>("");
+  const [duration, setDuration] = useState<string>("");
 
-  // Reusable component - this sets the default values based on the existence of the appointments
   useEffect(() => {
     setDiaryUid(appointment?.diary_uid?.toString() || "");
     setBookingTypeUid(appointment?.booking_type_uid?.toString() || "");
@@ -55,19 +54,16 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const saveBooking = async () => {
     try {
-      /**
-       * Handle the create/update logic here based on whether an appointment is present.
-       * If appointment is defined, update, otherwise create new.
-       */
+      const startTime = `${date}T${time}:00`;
       const response = await createBooking(
         1,
         parseInt(diaryUid),
         parseInt(bookingTypeUid),
         parseInt(bookingStatusUid),
-        "2024-01-01",
-        15,
-        1,
-        "Example reason"
+        startTime,
+        parseInt(duration),
+        1, // patient_uid
+        "Example reason" // hardcoded for now...
       );
       console.log("Booking saved successfully", response);
       onClose();
@@ -95,7 +91,7 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
                   id="diary"
                   placeholder="GP_1"
                   value={diaryUid}
-                  disabled // Disabled - we will assume this is the only diary for now
+                  disabled
                 />
               </Form.Group>
             </Col>

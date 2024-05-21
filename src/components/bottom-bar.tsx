@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Month from "./date-picker/month";
-import Year from "./date-picker/year";
+import Month from "./form/date-picker/month";
+import Year from "./form/date-picker/year";
 import { colors } from "../shared/global-styles/color";
 
 type DateChangeHandler = (newDate: Date) => void;

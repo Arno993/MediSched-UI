@@ -9,7 +9,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import DayPicker from "./components/date-picker/day";
+import DayPicker from "./components/form/date-picker/day";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import Navbar, { ViewType } from "./components/navbar";
@@ -25,6 +25,7 @@ import LoadingScreen from "./shared/loading-overlay";
 import { AppointmentModal } from "./components/appointment/modals/appointment-modal";
 import { FloatingButton } from "./components/add-button";
 import { AppContainer, Content, ContentBox } from "./app-styles";
+import { UserProvider, useUser } from "./contexts/user-context";
 
 const App: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -33,8 +34,8 @@ const App: React.FC = () => {
   const calendarRef = useRef<FullCalendar>();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [appointment, setAppointment] = useState<Appointment>();
-  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const { isLoading } = useUser();
 
   useEffect(() => {
     const checkAuth = () => {
@@ -51,7 +52,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      setIsLoading(true);
       const { startDate, endDate } = calculateDatesForView(selectedDate, view);
       const diary_uid = 1;
 
@@ -151,7 +151,7 @@ const App: React.FC = () => {
             </AppContainer>
           </>
         ) : (
-          <Login setIsLoading={setIsLoading} />
+          <Login />
         )}
       </LocalizationProvider>
     </Router>

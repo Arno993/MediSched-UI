@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import Cookies from "js-cookie";
-// import "./login.css";
 import { useNavigate } from "react-router-dom";
-import { login } from "../actions/login";
+import { useUser } from "../../contexts/user-context";
+import { login as loginUser } from "../actions/login";
 import {
   BackgroundImg,
   FlexContainer,
@@ -17,24 +16,21 @@ import {
   StyledSpacer,
 } from "./login-styles";
 
-type LoginProps = {
-  setIsLoading: (isLoading: boolean) => void;
-};
+type LoginProps = {};
 
-const Login: React.FC<LoginProps> = ({ setIsLoading }) => {
+const Login: React.FC<LoginProps> = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
+  const { login, setIsLoading } = useUser();
 
   const handleLogin = async () => {
-    // Set loading state
     setIsLoading(true);
-    // Clear form errors (if there are any)
     setError(undefined);
     try {
-      const result = await login({ username, password });
-      Cookies.set("uid", result.uid, { expires: 3 });
+      const result = await loginUser({ username, password });
+      login({ session_id: result.uid, name: "User Name" }); // Adjust user properties as needed
       navigate("/home");
     } catch (error: any) {
       console.error("Login Error:", error);
