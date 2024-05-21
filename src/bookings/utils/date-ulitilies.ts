@@ -38,11 +38,18 @@ export const calculateDatesForView = (
   }
 };
 
-export const formatDateExcludingDay = (date: Date): string => {
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-  };
+export const formatDynamicDate = (
+  date: Date,
+  displayMonth?: boolean,
+  displayYear?: boolean,
+  displayDay?: boolean
+): string => {
+  let options: Intl.DateTimeFormatOptions = {};
+
+  if (date && displayDay) options.day = "2-digit";
+  if (date && displayMonth) options.month = "long";
+  if (date && displayYear) options.year = "numeric";
+
   return date.toLocaleDateString("en-US", options);
 };
 

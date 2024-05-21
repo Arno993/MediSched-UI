@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../shared/global-styles/color";
 
 interface HamburgerIconProps {
   isOpen?: boolean;
@@ -9,13 +10,13 @@ interface HamburgerIconProps {
 
 export const HamburgerIcon = styled.div<HamburgerIconProps>`
   width: 3px;
-  height: 20px;
+  height: 25px;
   position: relative;
-  padding: 10px 13px 15px;
+  padding: 17px 13px;
   cursor: pointer;
 
   div {
-    width: 100%;
+    width: 30px;
     height: 2px;
     background-color: #000;
     position: absolute;
@@ -25,23 +26,24 @@ export const HamburgerIcon = styled.div<HamburgerIconProps>`
 
     &:first-child {
       top: 50%;
+      background-color: ${colors.darkNavy};
       transform: ${({ isOpen }) =>
         isOpen ? "translateY(-50%) rotate(45deg)" : "translateY(-9px)"};
     }
 
     &:nth-child(2) {
       top: 50%;
-      transition: transform 0.1s linear, opacity 0.2s linear;
+      background-color: ${colors.darkNavy};
+      transition: opacity 0.01s ease-out;
       transform: ${({ isOpen }) =>
-        isOpen
-          ? "translateY(-21px) translateX(-200%)"
-          : "translateY(0) translateX(0)"};
+        isOpen ? "translateY(-21px) " : "translateY(0)"};
       opacity: ${({ isOpen }) => (isOpen ? 0 : 1)};
       transform-origin: right;
     }
 
     &:nth-child(3) {
       top: 50%;
+      background-color: ${colors.medicalGreen};
       transform: ${({ isOpen }) =>
         isOpen ? "translateY(-50%) rotate(-45deg)" : "translateY(9px)"};
     }

@@ -20,7 +20,8 @@ export const login = async ({
   });
 
   if (!response.ok) {
-    throw new Error("Login failed!");
+    // Possibly due to invalid credentials
+    throw new Error("Oops.. Invalid username or password. Please try again...");
   }
 
   const data = await response.json();

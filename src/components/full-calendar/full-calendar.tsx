@@ -7,7 +7,6 @@ import listWeek from "@fullcalendar/list";
 import { Box } from "@mui/material";
 import { getRandomColor } from "../utils/colors";
 import { formatDate } from "../../bookings/utils/date-ulitilies";
-import { Booking } from "../../bookings/domain/booking";
 import { Appointment } from "../../diary/domain/appointment";
 
 interface ScheduleProps {
@@ -46,10 +45,9 @@ export const Schedule: React.FC<ScheduleProps> = ({
     ).toISOString();
 
     const eventDefaults = {
-      color: "#f700ff99!important", // Ensure the color is valid CSS color.
+      color: "#f700ff99!important",
       textColor: "#fff",
       backgroundColor: getRandomColor(),
-      borderColor: "#fff",
     };
 
     return {
@@ -92,7 +90,7 @@ export const Schedule: React.FC<ScheduleProps> = ({
         eventClick={(clickInfo) =>
           setAppointment(clickInfo.event.extendedProps as Appointment)
         }
-        themeSystem="bootstrap"
+        // themeSystem="bootstrap4"
         selectable
       />
     </Box>

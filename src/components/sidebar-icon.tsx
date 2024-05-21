@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { colors } from "../shared/global-styles/color";
 
 interface IconProps {
   isActive?: boolean;
@@ -9,8 +10,6 @@ interface IconProps {
 }
 
 const IconPlaceholder = styled.div<IconProps>`
-  width: 48px;
-  height: 48px;
   border-radius: 50%;
   background-color: #f1f1f1;
   margin-bottom: 5px;
@@ -19,16 +18,19 @@ const IconPlaceholder = styled.div<IconProps>`
   align-items: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  width: 42px;
+  height: 42px;
+  background-color: unset;
 
   &:hover {
-    transform: ${(props) => (props.logo ? "none" : "scale(1.1)")};
+    transform: ${(props) => (props.logo ? "none" : "scale(1.08)")};
   }
 
   ${(props) =>
     props.logo &&
     css`
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       background-color: unset;
 
       > img {
@@ -39,7 +41,7 @@ const IconPlaceholder = styled.div<IconProps>`
   ${(props) =>
     props.isActive &&
     css`
-      background-color: #0095ff99;
+      background-color: ${colors.darkNavy};
       box-shadow: 0px 4px 6px rgba(122, 169, 223, 0.41);
       &:hover {
         box-shadow: ${props.logo

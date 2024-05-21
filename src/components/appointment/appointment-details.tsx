@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Appointment } from "../../diary/domain/appointment";
-import { ReactComponent as UserIcon } from "../icons/user.svg";
+import {
+  StyledIcon,
+  DetailsContainer,
+  DetailRow,
+  Label,
+  Value,
+} from "./styled-appointment-details";
 
 interface AppointmentDetailsProps {
   appointment: Appointment;
+  onEdit: () => void;
 }
 
 const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
   appointment,
+  onEdit,
 }) => {
   if (!appointment) {
     return (
@@ -29,6 +37,15 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
           {(hasDebtor && appointment.debtor.debtor.debtor_name) || "N/A"}
         </Value>
       </DetailRow>
+      <button onClick={onEdit}>Edit</button>
+      <button
+        onClick={() => {
+          console.log("cancelling...");
+        }}
+      >
+        Cancel
+      </button>
+
       <DetailRow>
         <Label>Surname:</Label>
         <Value>
@@ -55,52 +72,52 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
   );
 };
 
-const StyledIcon = styled(UserIcon)`
-  background-color: #e0e0e0;
-  width: 100px !important;
-  height: 100px !important;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #333;
-  position: relative;
-  margin: 0px auto;
-`;
+// const StyledIcon = styled(UserIcon)`
+//   background-color: #e0e0e0;
+//   width: 100px !important;
+//   height: 100px !important;
+//   border-radius: 50%;
+//   margin-bottom: 10px;
+//   padding: 8px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 24px;
+//   color: #333;
+//   position: relative;
+//   margin: 0px auto;
+// `;
 
-const DetailsContainer = styled.div`
-  padding: 15px;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: 100%;
-`;
+// const DetailsContainer = styled.div`
+//   padding: 15px;
+//   border-radius: 8px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 15px;
+//   height: 100%;
+// `;
 
-const DetailRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
+// const DetailRow = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 10px 0;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid #ddd;
-  }
-`;
+//   &:not(:last-child) {
+//     border-bottom: 1px solid #ddd;
+//   }
+// `;
 
-const Label = styled.span`
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 16px;
-`;
+// const Label = styled.span`
+//   font-weight: bold;
+//   display: flex;
+//   align-items: center;
+//   gap: 5px;
+//   font-size: 16px;
+// `;
 
-const Value = styled.span`
-  color: #333;
-  font-size: 16px;
-`;
+// const Value = styled.span`
+//   color: #333;
+//   font-size: 16px;
+// `;
 
 export default AppointmentDetails;
